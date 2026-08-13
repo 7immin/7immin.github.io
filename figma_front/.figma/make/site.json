@@ -1,0 +1,10 @@
+{
+  "description": "Showcase your professional portfolio and resume in a clean, elegant design to impress employers and highlight your skills effectively.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
