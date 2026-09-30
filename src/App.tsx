@@ -25,74 +25,98 @@ const ACTIVITIES = [
     title: '33기 이화다우리',
     role: '멘티',
     period: '2023.03 — 2023.06',
-    desc: '일 4천만 명 이상이 사용하는 검색 결과 페이지 리디자인을 주도했습니다. 12개 제품 팀이 도입한 디자인 시스템을 구축했습니다.',
+    desc: '설명',
   },
   {
     title: 'EDOC',
     role: '동아리원',
     period: '2024.03 — 2025.02',
-    desc: '카카오톡 웹의 핵심 채팅 인터페이스 컴포넌트를 개발했습니다. 코드 스플리팅과 프리페칭을 통해 초기 로딩 시간을 38% 단축했습니다.',
+    desc: '설명',
   },
   {
     title: 'EDOC',
     role: '운영진',
     period: '2025.03 — 2025.08',
-    desc: '모바일 퍼스트 상품 페이지를 제작하고 결제 플로우 A/B 테스트를 통해 전환율을 22% 향상시켰습니다.',
+    desc: '설명',
   },
   {
     title: '미래인재육성재단 가온회',
     role: '서울경기강원 대표',
     period: '2024.06 — 2025.06',
-    desc: '모바일 퍼스트 상품 페이지를 제작하고 결제 플로우 A/B 테스트를 통해 전환율을 22% 향상시켰습니다.',
+    desc: '설명',
   },
   {
     title: '몰입캠프',
     role: '참가자',
     period: '2026.07 — 2026.08',
-    desc: '모바일 퍼스트 상품 페이지를 제작하고 결제 플로우 A/B 테스트를 통해 전환율을 22% 향상시켰습니다.',
+    desc: '설명',
   },
 ]
 
 const PROJECTS = [
   {
-    title: 'Meridian',
-    category: '프로덕트 디자인 / 개발',
+    title: 'FinMate',
+    category: '공모전 · 금융 앱',
+    year: '2026',
+    desc: '외국인 유학생이 학비 납부·해외송금·계좌 개설·월세보증금 등 상황별 서류를 증빙하면 그만큼 이체 한도가 열리는 핀테크 앱입니다. Gemini 기반 AI 상담으로 개인화된 금융 조언을 제공하며 한국어·영어·중국어·베트남어를 지원합니다.',
+    tags: ['Next.js', 'TypeScript', 'Supabase', 'Gemini API'],
+    repo: 'https://github.com/7immin/FinMate',
+  },
+  {
+    title: 'ALine',
+    category: '몰입캠프 · AR 소셜 앱',
+    year: '2026',
+    desc: '손 제스처로 허공에 그림을 그려 공유하는 에어 드로잉 SNS입니다. MediaPipe 손 추적과 AR 라운지를 활용했으며, 소셜 피드·채팅·알림과 Supabase 연동을 맡았습니다.',
+    tags: ['React Native', 'Supabase', 'MediaPipe', 'AR'],
+    repo: 'https://github.com/7immin/ALine',
+  },
+  {
+    title: 'ClickMe & WishMatch',
+    category: '몰입캠프 · 실시간 투표 서비스',
+    year: '2026',
+    desc: '"부먹 vs 찍먹"처럼 반복 투표를 진행하고 결과를 실시간 공유하는 서비스입니다. 프론트엔드를 담당했습니다.',
+    tags: ['Next.js', 'TypeScript', 'Supabase', 'Docker'],
+    repo: 'https://github.com/7immin/ClickMe-WishMatch',
+  },
+  {
+    title: 'Kit',
+    category: '몰입캠프 · 발표 보조 서비스',
+    year: '2026',
+    desc: '슬라이드 제어, 대본 요약, 타이머, 청중 질문 응답을 하나로 묶은 실시간 발표 보조 서비스입니다. Socket.io 실시간 동기화와 Gemini API 연동을 포함한 백엔드를 담당했습니다.',
+    tags: ['Node.js', 'Socket.io', 'React Native', 'Gemini API'],
+    repo: 'https://github.com/7immin/Kit',
+  },
+  {
+    title: 'ColorMaster',
+    category: '몰입캠프 · 실시간 웹 게임',
+    year: '2026',
+    desc: '평균 RGB 값을 예측해 정확도를 겨루는 실시간 멀티플레이 웹 게임입니다. Socket.IO 기반 라운드 동기화와 랭킹·친구 시스템을 백엔드 중심으로 개발했습니다.',
+    tags: ['Node.js', 'Express', 'Socket.IO', 'Firebase'],
+    repo: 'https://github.com/7immin/ColorMaster',
+  },
+  {
+    title: 'TriAI',
+    category: '졸업 프로젝트 · 연구',
+    year: '2025 — 2026',
+    desc: '멀티모달 딥러닝 기반 지진 PGV 추정 및 위험지도 시각화 연구입니다. 지진파형과 GNSS 변위 데이터를 결합해 PGV 추정 정확도를 높이고, 공간 보간으로 지진 위험지도를 생성했습니다. 깃허브 관리와 지진파형 인코더 모델 설계·학습을 맡았습니다.',
+    tags: ['Python', 'EQTransformer', 'Google Colab', '멀티모달 딥러닝'],
+    repo: 'https://github.com/7immin/Capstone-TriAI',
+  },
+  {
+    title: 'Brewha',
+    category: '수업 프로젝트',
     year: '2024',
-    desc: '분산된 디자인 팀을 위한 실시간 협업 도구입니다. React, WebSockets, 커스텀 CRDT 레이어로 구축했습니다.',
-    tags: ['React', 'TypeScript', 'Node.js', 'WebSocket'],
-    img: 'photo-1558618666-fcd25c85cd64',
-  },
-  {
-    title: 'Sora Dashboard',
-    category: '데이터 시각화',
-    year: '2023',
-    desc: '이커머스 브랜드를 위한 애널리틱스 대시보드입니다. 하루 200만 건 이상의 이벤트를 처리하고 실시간으로 시각화합니다.',
-    tags: ['Next.js', 'D3.js', 'PostgreSQL'],
-    img: 'photo-1551288049-bebda4e38f71',
-  },
-  {
-    title: 'Pallete',
-    category: '오픈소스',
-    year: '2023',
-    desc: '색상 접근성 검사기 및 팔레트 생성 도구입니다. GitHub 스타 4천 개 이상, 전 세계 200개 이상의 디자인 시스템에서 사용 중입니다.',
-    tags: ['Vue 3', 'WCAG 2.1', 'CLI'],
-    img: 'photo-1609921212029-bb5a28e60960',
-  },
-  {
-    title: 'Chroma OS',
-    category: '사이드 프로젝트',
-    year: '2022',
-    desc: '라이브 프리뷰와 AI 자동완성을 지원하는 브라우저 기반 코드 에디터입니다. 14개 언어 문법 강조를 지원합니다.',
-    tags: ['Monaco', 'WebAssembly', 'AI'],
-    img: 'photo-1537432376769-00f5c2f4c8d2',
+    desc: '오픈소스SW플랫폼 수업에서 진행한 프로젝트입니다. Flask 기반 웹 서비스를 6인 팀으로 기획부터 배포까지 진행했습니다.',
+    tags: ['Python', 'Flask', 'HTML/CSS/JS'],
+    repo: 'https://github.com/7immin/OSWF',
   },
 ]
 
 const SKILLS = [
-  { group: '언어', items: ['TypeScript', 'JavaScript', 'Go', 'Python'] },
-  { group: '프레임워크', items: ['React', 'Next.js', 'Vue 3', 'Node.js'] },
-  { group: '인프라', items: ['AWS', 'Docker', 'Vercel', 'CI/CD'] },
-  { group: '도구', items: ['Figma', 'Git', 'PostgreSQL', 'Redis'] },
+  { group: '언어', items: ['TypeScript', 'JavaScript', 'Python'] },
+  { group: '프레임워크', items: ['React / React Native', 'Next.js', 'Node.js / Express', 'Flask'] },
+  { group: '인프라 · 데이터', items: ['Supabase', 'Firebase', 'Railway'] },
+  { group: '협업 · API', items: ['Socket.io', 'Git/GitHub', 'Gemini API'] },
 ]
 
 /* ─── 훅 ──────────────────────────────────────────────── */
@@ -158,7 +182,7 @@ const blurStyle = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) 
 /* ─── 섹션 레이블 ─────────────────────────────────────── */
 
 const SectionLabel = ({ children }: { children: string }) => (
-  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 48 }}>
+  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 32 }}>
     <span style={{ ...sans, color: 'var(--accent)', fontSize: 16, fontWeight: 700 }}>{'>'}</span>
     <span style={{ ...sans, color: 'var(--accent)', fontSize: 13, fontWeight: 600, letterSpacing: '0.05em' }}>
       {children}
@@ -256,31 +280,27 @@ const ContactForm = () => {
 
 const ProjectCard = ({ project, delay = 0 }: { project: typeof PROJECTS[0]; delay?: number }) => {
   const ref = useFadeUp()
+  const hasRepo = Boolean(project.repo)
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>}
+    <a ref={ref as React.RefObject<HTMLAnchorElement>}
+      href={hasRepo ? project.repo : undefined}
+      target={hasRepo ? '_blank' : undefined}
+      rel={hasRepo ? 'noopener noreferrer' : undefined}
+      onClick={e => { if (!hasRepo) e.preventDefault() }}
       className="fade-up card-hover"
-      style={{ transitionDelay: `${delay}ms`, border: '1px solid var(--border)', background: 'var(--bg-2)', overflow: 'hidden', cursor: 'pointer' }}>
-      <div style={{ overflow: 'hidden', height: 200, position: 'relative' }}>
-        <img
-          src={`https://images.unsplash.com/photo-${project.img}?w=720&h=400&fit=crop&auto=format`}
-          alt={project.title}
-          style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(25%) brightness(0.7)', transition: 'transform 0.5s, filter 0.5s' }}
-          onMouseEnter={e => { const el = e.currentTarget; el.style.transform = 'scale(1.05)'; el.style.filter = 'grayscale(5%) brightness(0.85)' }}
-          onMouseLeave={e => { const el = e.currentTarget; el.style.transform = 'scale(1)'; el.style.filter = 'grayscale(25%) brightness(0.7)' }}
-        />
-        <div style={{ position: 'absolute', top: 12, right: 12, ...sans, fontSize: 12, fontWeight: 600, color: 'var(--accent)', background: 'rgba(0,0,0,0.65)', padding: '3px 8px', border: '1px solid var(--accent-bd)' }}>
-          {project.year}
-        </div>
-      </div>
+      style={{ transitionDelay: `${delay}ms`, border: '1px solid var(--border)', background: 'var(--bg-2)', overflow: 'hidden', cursor: hasRepo ? 'pointer' : 'default', textDecoration: 'none', color: 'inherit', display: 'block' }}>
       <div style={{ padding: '20px 22px 24px' }}>
-        <div style={{ ...sans, fontSize: 12, color: 'var(--accent)', marginBottom: 6, fontWeight: 500 }}>{project.category}</div>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
+          <div style={{ ...sans, fontSize: 12, color: 'var(--accent)', fontWeight: 500 }}>{project.category}</div>
+          <div style={{ ...sans, fontSize: 12, color: 'var(--ink-3)', fontWeight: 500 }}>{project.year}</div>
+        </div>
         <h3 style={{ ...sans, fontSize: 17, fontWeight: 600, color: 'var(--heading)', marginBottom: 8 }}>{project.title}</h3>
         <p style={{ ...sans, fontSize: 13, lineHeight: 1.7, color: 'var(--ink-2)', marginBottom: 14 }}>{project.desc}</p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
           {project.tags.map(t => <span key={t} className="tag">{t}</span>)}
         </div>
       </div>
-    </div>
+    </a>
   )
 }
 
@@ -327,14 +347,14 @@ const SkillCard = ({ group, items, delay }: { group: string; items: string[]; de
 /* ─── 메인 앱 ────────────────────────────────────────── */
 
 export default function App() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark')
+  const [theme, setTheme] = useState<'dark' | 'light'>('light')
   const [activeSection, setActiveSection] = useState('about')
   const [menuOpen, setMenuOpen] = useState(false)
   const [messages, setMessages] = useState(INITIAL_MESSAGES)
   const [scrolled, setScrolled] = useState(false)
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({})
 
-  const typed = useTypewriter(['프론트엔드 엔지니어', '프로덕트 빌더', 'UI/UX 엔지니어', '오픈소스 기여자'])
+  const typed = useTypewriter(['백엔드 개발자', '풀스택 개발자', 'AI 엔지니어'])
 
   const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
 
@@ -420,7 +440,7 @@ export default function App() {
             </div>
 
             <p style={{ ...sans, fontSize: 16, lineHeight: 1.85, color: 'var(--ink-2)', marginBottom: 48 }}>
-              소개
+              이화여자대학교 소프트웨어학부 컴퓨터공학전공 (2023.03 — 현재).
             </p>
 
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 14, marginBottom: 80 }}>
@@ -446,10 +466,9 @@ export default function App() {
 
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', borderTop: '1px solid var(--border)' }}>
               {[
-                { value: '7년+', label: '경력' },
-                { value: '40+', label: '프로젝트' },
-                { value: '12', label: '오픈소스' },
                 { value: '1', label: '수상' },
+                { value: '0', label: '자격증'},
+                { value: '59,894,840', label: '장학금' },
               ].map(({ value, label }, i) => (
                 <div key={label} style={{ padding: '22px 36px', borderRight: i < 3 ? '1px solid var(--border)' : 'none', textAlign: 'center' }}>
                   <div style={{ ...sans, fontSize: 26, fontWeight: 700, color: 'var(--accent)', lineHeight: 1 }}>{value}</div>
@@ -461,14 +480,14 @@ export default function App() {
         </section>
 
         {/* ── 활동 ── */}
-        <section id="activities" ref={setRef('activities')} style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 24px' }}>
+        <section id="activities" ref={setRef('activities')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
           <SectionLabel>활동</SectionLabel>
           {ACTIVITIES.map((activity, i) => <ActivityRow key={i} activity={activity} delay={i * 80} />)}
           <div style={{ borderTop: '1px solid var(--border)' }} />
         </section>
 
         {/* ── 프로젝트 ── */}
-        <section id="projects" ref={setRef('projects')} style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 24px' }}>
+        <section id="projects" ref={setRef('projects')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
           <SectionLabel>주요 프로젝트</SectionLabel>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 20 }}>
             {PROJECTS.map((p, i) => <ProjectCard key={i} project={p} delay={i * 80} />)}
@@ -476,7 +495,7 @@ export default function App() {
         </section>
 
         {/* ── 스킬 ── */}
-        <section id="skills" ref={setRef('skills')} style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 24px' }}>
+        <section id="skills" ref={setRef('skills')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
           <SectionLabel>스킬</SectionLabel>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 20 }}>
             {SKILLS.map(({ group, items }, gi) => <SkillCard key={group} group={group} items={items} delay={gi * 60} />)}
@@ -484,7 +503,7 @@ export default function App() {
         </section>
 
         {/* ── 방명록 ── */}
-        <section id="guestbook" ref={setRef('guestbook')} style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 24px' }}>
+        <section id="guestbook" ref={setRef('guestbook')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
           <SectionLabel>방명록</SectionLabel>
           <p style={{ ...sans, fontSize: 14, color: 'var(--ink-2)', marginBottom: 24 }}>
             방문해주셔서 감사합니다. 짧은 메시지 남겨주세요 :)
@@ -506,7 +525,7 @@ export default function App() {
         </section>
 
         {/* ── 연락처 ── */}
-        <section id="contact" ref={setRef('contact')} style={{ maxWidth: 1100, margin: '0 auto', padding: '100px 24px' }}>
+        <section id="contact" ref={setRef('contact')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
           <SectionLabel>연락처</SectionLabel>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
             <div>
@@ -518,13 +537,13 @@ export default function App() {
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {[
-                  { label: '이메일', value: 'kim.min.cse@gmail.com', href: 'mailto:junho.kim@email.com' },
-                  { label: 'GitHub', value: 'github.com/7immin', href: '#' },
-                  { label: 'LinkedIn', value: 'linkedin.com/in/7immin', href: '#' },
+                  { label: '이메일', value: 'kim.min.cse@gmail.com', href: 'mailto:kim.min.cse@gmail.com' },
+                  { label: 'GitHub', value: 'github.com/7immin', href: 'https://github.com/7immin' },
+                  { label: 'LinkedIn', value: 'linkedin.com/in/7immin', href: 'https://linkedin.com/in/7immin' },
                 ].map(({ label, value, href }) => (
                   <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                     <span style={{ ...sans, fontSize: 13, fontWeight: 600, color: 'var(--accent)', width: 68, flexShrink: 0 }}>{label}</span>
-                    <a href={href} style={{ ...sans, fontSize: 13, color: 'var(--ink-2)', textDecoration: 'none', borderBottom: '1px solid var(--border)', paddingBottom: 1, transition: 'color 0.2s, border-color 0.2s' }}
+                    <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} style={{ ...sans, fontSize: 13, color: 'var(--ink-2)', textDecoration: 'none', borderBottom: '1px solid var(--border)', paddingBottom: 1, transition: 'color 0.2s, border-color 0.2s' }}
                       onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent)' }}
                       onMouseLeave={e => { e.currentTarget.style.color = 'var(--ink-2)'; e.currentTarget.style.borderColor = 'var(--border)' }}>
                       {value}

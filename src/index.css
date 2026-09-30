@@ -20,29 +20,8 @@ button, input, textarea, select {
   font-family: var(--font-sans);
 }
 
-/* ── 다크 테마 (기본) ── */
-:root, [data-theme="dark"] {
-  --bg:        #070a09;
-  --bg-2:      rgba(255,255,255,0.02);
-  --ink:       #d4e8d4;
-  --ink-2:     #7a9a7a;
-  --ink-3:     #4a6a4a;
-  --accent:    #4ade80;
-  --accent-bg: rgba(74,222,128,0.08);
-  --accent-bd: rgba(74,222,128,0.2);
-  --border:    rgba(74,222,128,0.1);
-  --border-2:  rgba(74,222,128,0.06);
-  --nav-bg:    rgba(7,10,9,0.92);
-  --tag-bg:    rgba(74,222,128,0.08);
-  --tag-color: #4ade80;
-  --tag-bd:    rgba(74,222,128,0.2);
-  --heading:   #e8f5e8;
-  --input-bg:  rgba(74,222,128,0.04);
-  --input-surface: rgba(255,255,255,0.06);
-}
-
-/* ── 라이트 테마 ── */
-[data-theme="light"] {
+/* ── 라이트 테마 (기본) ── */
+:root, [data-theme="light"] {
   --bg:        #f4f8f4;
   --bg-2:      rgba(0,0,0,0.02);
   --ink:       #1a2e1a;
@@ -61,6 +40,27 @@ button, input, textarea, select {
   --heading:   #0f1f0f;
   --input-bg:  rgba(22,163,74,0.04);
   --input-surface: #ffffff;
+}
+
+/* ── 다크 테마 ── */
+[data-theme="dark"] {
+  --bg:        #070a09;
+  --bg-2:      rgba(255,255,255,0.02);
+  --ink:       #d4e8d4;
+  --ink-2:     #7a9a7a;
+  --ink-3:     #4a6a4a;
+  --accent:    #4ade80;
+  --accent-bg: rgba(74,222,128,0.08);
+  --accent-bd: rgba(74,222,128,0.2);
+  --border:    rgba(74,222,128,0.1);
+  --border-2:  rgba(74,222,128,0.06);
+  --nav-bg:    rgba(7,10,9,0.92);
+  --tag-bg:    rgba(74,222,128,0.08);
+  --tag-color: #4ade80;
+  --tag-bd:    rgba(74,222,128,0.2);
+  --heading:   #e8f5e8;
+  --input-bg:  rgba(74,222,128,0.04);
+  --input-surface: rgba(255,255,255,0.06);
 }
 
 body {
