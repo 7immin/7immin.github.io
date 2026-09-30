@@ -204,7 +204,7 @@ const GuestbookForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 2fr auto', gap: 10, marginBottom: 36 }}>
+    <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '180px 1fr auto', gap: 10, marginBottom: 36 }}>
       <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
         placeholder="이름" style={inputBase} onFocus={focusStyle} onBlur={blurStyle} />
       <input required value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
