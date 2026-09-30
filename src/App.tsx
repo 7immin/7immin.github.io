@@ -1,5 +1,7 @@
 // v6
 import { useState, useEffect, useRef, useCallback } from 'react'
+import { collection, addDoc, onSnapshot, orderBy, query, serverTimestamp, Timestamp } from 'firebase/firestore'
+import { db } from './lib/firebase'
 
 /* ─── 데이터 ─────────────────────────────────────────── */
 
@@ -12,43 +14,37 @@ const NAV = [
   { label: '연락처', id: 'contact' },
 ]
 
-type GuestEntry = { id: number; name: string; message: string; date: string }
-
-const INITIAL_MESSAGES: GuestEntry[] = [
-  { id: 1, name: 'Park Soobin', message: '정말 멋진 포트폴리오예요! 언젠가 같이 작업해보고 싶어요 :)', date: '2026-08-10' },
-  { id: 2, name: 'James L.', message: 'Love the clean design. Your Meridian project is incredibly impressive.', date: '2026-08-11' },
-  { id: 3, name: '이현준', message: '디자인 시스템 글 잘 읽었습니다. 많이 배워갑니다!', date: '2026-08-12' },
-]
+type GuestEntry = { id: string; name: string; message: string; date: string }
 
 const ACTIVITIES = [
   {
     title: '33기 이화다우리',
     role: '멘티',
-    period: '2023.03 — 2023.06',
+    period: '2023.03 – 2023.06',
     desc: '설명',
   },
   {
     title: 'EDOC',
     role: '동아리원',
-    period: '2024.03 — 2025.02',
+    period: '2024.03 – 2025.02',
     desc: '설명',
   },
   {
     title: 'EDOC',
     role: '운영진',
-    period: '2025.03 — 2025.08',
+    period: '2025.03 – 2025.08',
     desc: '설명',
   },
   {
     title: '미래인재육성재단 가온회',
     role: '서울경기강원 대표',
-    period: '2024.06 — 2025.06',
+    period: '2024.06 – 2025.06',
     desc: '설명',
   },
   {
     title: '몰입캠프',
     role: '참가자',
-    period: '2026.07 — 2026.08',
+    period: '2026.07 – 2026.08',
     desc: '설명',
   },
 ]
@@ -97,18 +93,10 @@ const PROJECTS = [
   {
     title: 'TriAI',
     category: '졸업 프로젝트 · 연구',
-    year: '2025 — 2026',
+    year: '2025 – 2026',
     desc: '멀티모달 딥러닝 기반 지진 PGV 추정 및 위험지도 시각화 연구입니다. 지진파형과 GNSS 변위 데이터를 결합해 PGV 추정 정확도를 높이고, 공간 보간으로 지진 위험지도를 생성했습니다. 깃허브 관리와 지진파형 인코더 모델 설계·학습을 맡았습니다.',
     tags: ['Python', 'EQTransformer', 'Google Colab', '멀티모달 딥러닝'],
     repo: 'https://github.com/7immin/Capstone-TriAI',
-  },
-  {
-    title: 'Brewha',
-    category: '수업 프로젝트',
-    year: '2024',
-    desc: '오픈소스SW플랫폼 수업에서 진행한 프로젝트입니다. Flask 기반 웹 서비스를 6인 팀으로 기획부터 배포까지 진행했습니다.',
-    tags: ['Python', 'Flask', 'HTML/CSS/JS'],
-    repo: 'https://github.com/7immin/OSWF',
   },
 ]
 
@@ -193,16 +181,26 @@ const SectionLabel = ({ children }: { children: string }) => (
 
 /* ─── 방명록 폼 ──────────────────────────────────────── */
 
-const GuestbookForm = ({ onSubmit }: { onSubmit: (e: GuestEntry) => void }) => {
+const GuestbookForm = () => {
   const [form, setForm] = useState({ name: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    onSubmit({ id: Date.now(), name: form.name, message: form.message, date: new Date().toISOString().slice(0, 10) })
-    setForm({ name: '', message: '' })
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 3000)
+    setSubmitting(true)
+    try {
+      await addDoc(collection(db, 'guestbook'), {
+        name: form.name,
+        message: form.message,
+        createdAt: serverTimestamp(),
+      })
+      setForm({ name: '', message: '' })
+      setSubmitted(true)
+      setTimeout(() => setSubmitted(false), 3000)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   return (
@@ -211,13 +209,14 @@ const GuestbookForm = ({ onSubmit }: { onSubmit: (e: GuestEntry) => void }) => {
         placeholder="이름" style={inputBase} onFocus={focusStyle} onBlur={blurStyle} />
       <input required value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
         placeholder="메시지를 남겨주세요..." style={inputBase} onFocus={focusStyle} onBlur={blurStyle} />
-      <button type="submit" style={{
+      <button type="submit" disabled={submitting} style={{
         ...sans, fontSize: 14, fontWeight: 600, padding: '11px 20px',
         background: submitted ? 'var(--accent-bd)' : 'var(--accent)',
         border: 'none', color: 'var(--bg)',
-        cursor: 'pointer', whiteSpace: 'nowrap', transition: 'opacity 0.2s',
+        cursor: submitting ? 'default' : 'pointer', whiteSpace: 'nowrap', transition: 'opacity 0.2s',
+        opacity: submitting ? 0.7 : 1,
       }}>
-        {submitted ? '등록됨 ✓' : '남기기 →'}
+        {submitted ? '등록됨 ✓' : submitting ? '등록 중...' : '남기기 →'}
       </button>
     </form>
   )
@@ -230,9 +229,9 @@ const ContactForm = () => {
   const [sent, setSent] = useState(false)
 
   const fields = [
-    { key: 'name', label: '이름', placeholder: '홍길동', type: 'text' },
+    { key: 'name', label: '이름', placeholder: '김민', type: 'text' },
     { key: 'email', label: '이메일', placeholder: 'your@email.com', type: 'email' },
-    { key: 'message', label: '메시지', placeholder: '프로젝트에 대해 알려주세요...', type: 'textarea' },
+    { key: 'message', label: '메시지', placeholder: '', type: 'textarea' },
   ]
 
   return sent ? (
@@ -350,7 +349,7 @@ export default function App() {
   const [theme, setTheme] = useState<'dark' | 'light'>('light')
   const [activeSection, setActiveSection] = useState('about')
   const [menuOpen, setMenuOpen] = useState(false)
-  const [messages, setMessages] = useState(INITIAL_MESSAGES)
+  const [messages, setMessages] = useState<GuestEntry[]>([])
   const [scrolled, setScrolled] = useState(false)
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({})
 
@@ -379,6 +378,23 @@ export default function App() {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const q = query(collection(db, 'guestbook'), orderBy('createdAt', 'desc'))
+    const unsubscribe = onSnapshot(q, snapshot => {
+      setMessages(snapshot.docs.map(doc => {
+        const data = doc.data()
+        const createdAt = data.createdAt as Timestamp | null
+        return {
+          id: doc.id,
+          name: data.name,
+          message: data.message,
+          date: createdAt ? createdAt.toDate().toISOString().slice(0, 10) : new Date().toISOString().slice(0, 10),
+        }
+      }))
+    })
+    return unsubscribe
   }, [])
 
   return (
@@ -440,7 +456,7 @@ export default function App() {
             </div>
 
             <p style={{ ...sans, fontSize: 16, lineHeight: 1.85, color: 'var(--ink-2)', marginBottom: 48 }}>
-              이화여자대학교 소프트웨어학부 컴퓨터공학전공 (2023.03 — 현재).
+              이화여자대학교 소프트웨어학부 컴퓨터공학전공 (2023.03 – 현재).
             </p>
 
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 14, marginBottom: 80 }}>
@@ -508,8 +524,13 @@ export default function App() {
           <p style={{ ...sans, fontSize: 14, color: 'var(--ink-2)', marginBottom: 24 }}>
             방문해주셔서 감사합니다. 짧은 메시지 남겨주세요 :)
           </p>
-          <GuestbookForm onSubmit={entry => setMessages(prev => [entry, ...prev])} />
+          <GuestbookForm />
           <div>
+            {messages.length === 0 && (
+              <p style={{ ...sans, fontSize: 14, color: 'var(--ink-3)', padding: '18px 0', borderTop: '1px solid var(--border-2)' }}>
+                아직 방명록이 없어요. 첫 메시지를 남겨주세요!
+              </p>
+            )}
             {messages.map((msg, i) => (
               <div key={msg.id}
                 style={{ display: 'grid', gridTemplateColumns: '160px 1fr', gap: 24, padding: '18px 0', borderTop: '1px solid var(--border-2)' }}>
