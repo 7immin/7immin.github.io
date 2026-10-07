@@ -88,7 +88,7 @@ const PROJECTS = [
     title: 'ColorMaster',
     category: '몰입캠프 · 실시간 웹 게임',
     year: '2026',
-    desc: '평균 RGB 값을 예측해 정확도를 겨루는 실시간 멀티플레이 웹 게임입니다. Socket.IO 기반 라운드 동기화와 랭킹·친구 시스템을 백엔드 중심으로 개발했습니다.',
+    desc: '이미지의 평균 RGB 값을 가장 정확하게 예측하는 경쟁형 웹 기반 실시간 멀티플레이 게임입니다. Socket.IO 기반 라운드 동기화와 랭킹·친구 시스템을 백엔드 중심으로 개발했습니다.',
     tags: ['Node.js', 'Express', 'Socket.IO', 'Firebase'],
     repo: 'https://github.com/7immin/ColorMaster',
   },
@@ -312,7 +312,9 @@ const SkillCard = ({ group, items, delay }: { group: string; items: string[]; de
 /* ─── 메인 앱 ────────────────────────────────────────── */
 
 export default function App() {
-  const [theme, setTheme] = useState<'dark' | 'light'>('light')
+  const [theme, setTheme] = useState<'dark' | 'light'>(
+    () => document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'
+  )
   const [activeSection, setActiveSection] = useState('about')
   const [menuOpen, setMenuOpen] = useState(false)
   const [messages, setMessages] = useState<GuestEntry[]>([])
@@ -321,7 +323,11 @@ export default function App() {
 
   const typed = useTypewriter(['백엔드 개발자', '풀스택 개발자', 'AI 엔지니어'])
 
-  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark')
+  const toggleTheme = () => {
+    const next = theme === 'dark' ? 'light' : 'dark'
+    setTheme(next)
+    try { localStorage.setItem('theme', next) } catch { /* storage unavailable: choice lasts this visit only */ }
+  }
 
   const setRef = useCallback((id: string) => (el: HTMLElement | null) => {
     sectionsRef.current[id] = el
@@ -330,6 +336,17 @@ export default function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme)
   }, [theme])
+
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)')
+    const onChange = (e: MediaQueryListEvent) => {
+      let saved: string | null = null
+      try { saved = localStorage.getItem('theme') } catch { /* ignore */ }
+      if (!saved) setTheme(e.matches ? 'dark' : 'light')
+    }
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [])
 
   useEffect(() => {
     const obs = new IntersectionObserver(
