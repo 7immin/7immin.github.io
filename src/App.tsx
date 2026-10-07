@@ -14,6 +14,8 @@ const NAV = [
   { label: '연락처', id: 'contact' },
 ]
 
+const SHOW_SKILLS = false
+
 type GuestEntry = { id: string; name: string; message: string; date: string }
 
 const ACTIVITIES = [
@@ -378,7 +380,7 @@ export default function App() {
           </a>
 
           <ul style={{ display: 'flex', gap: 32, listStyle: 'none', alignItems: 'center' }}>
-            {NAV.map(({ label, id }) => (
+            {NAV.filter(({ id }) => SHOW_SKILLS || id !== 'skills').map(({ label, id }) => (
               <li key={id}>
                 <a href={`#${id}`} style={{
                   ...sans, fontSize: 13, textDecoration: 'none', fontWeight: 500,
@@ -475,12 +477,14 @@ export default function App() {
         </section>
 
         {/* ── 스킬 ── */}
-        <section id="skills" ref={setRef('skills')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
-          <SectionLabel>스킬</SectionLabel>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 20 }}>
-            {SKILLS.map(({ group, items }, gi) => <SkillCard key={group} group={group} items={items} delay={gi * 60} />)}
-          </div>
-        </section>
+        {SHOW_SKILLS && (
+          <section id="skills" ref={setRef('skills')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
+            <SectionLabel>스킬</SectionLabel>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 20 }}>
+              {SKILLS.map(({ group, items }, gi) => <SkillCard key={group} group={group} items={items} delay={gi * 60} />)}
+            </div>
+          </section>
+        )}
 
         {/* ── 방명록 ── */}
         <section id="guestbook" ref={setRef('guestbook')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
