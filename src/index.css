@@ -177,13 +177,26 @@ input::placeholder, textarea::placeholder {
     padding-right: 20px !important;
   }
 
+  section:not(#about) {
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+  }
+
+  section#about {
+    min-height: auto !important;
+  }
+
   form {
     grid-template-columns: 1fr !important;
   }
 
-  section[id="contact"] > div:last-child,
-  section[id="contact"] > div:last-child > div {
+  section[id="contact"] > div:last-child {
     grid-template-columns: 1fr !important;
     gap: 40px !important;
+  }
+
+  .activity-row {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
   }
 }

@@ -21,31 +21,31 @@ const ACTIVITIES = [
     title: '33기 이화다우리',
     role: '멘티',
     period: '2023.03 – 2023.06',
-    desc: '설명',
+    desc: '1명의 선배 멘토와 3명의 후배 멘티들이 팀을 이루어 친목을 다지고, 대학 생활 적응 및 리더십 향상에 도움을 얻을 수 있는 이화여자대학교의 멘토링 활동',
   },
   {
     title: 'EDOC',
     role: '동아리원',
     period: '2024.03 – 2025.02',
-    desc: '설명',
+    desc: '이화여자대학교 컴퓨터공학과 프로그래밍 동아리',
   },
   {
     title: 'EDOC',
-    role: '운영진',
+    role: '운영진(총무)',
     period: '2025.03 – 2025.08',
-    desc: '설명',
+    desc: '이화여자대학교 컴퓨터공학과 프로그래밍 동아리',
   },
   {
-    title: '미래인재육성재단 가온회',
+    title: '미래인재육성재단 가온회 16기',
     role: '서울경기강원 대표',
     period: '2024.06 – 2025.06',
-    desc: '설명',
+    desc: '미래인재육성재단의 장학생을 대표하며, 장학생들의 친목과 정보교류에 앞장서는 자치기구',
   },
   {
     title: '몰입캠프',
     role: '참가자',
     period: '2026.07 – 2026.08',
-    desc: '설명',
+    desc: '학생들이 4주 동안 자율적으로 집중 개발을 경험하는 프로그래밍 캠프',
   },
 ]
 
@@ -208,7 +208,7 @@ const GuestbookForm = () => {
       <input required value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
         placeholder="이름" style={inputBase} onFocus={focusStyle} onBlur={blurStyle} />
       <input required value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
-        placeholder="메시지를 남겨주세요..." style={inputBase} onFocus={focusStyle} onBlur={blurStyle} />
+        placeholder="방명록을 남겨주세요." style={inputBase} onFocus={focusStyle} onBlur={blurStyle} />
       <button type="submit" disabled={submitting} style={{
         ...sans, fontSize: 14, fontWeight: 600, padding: '11px 20px',
         background: submitted ? 'var(--accent-bd)' : 'var(--accent)',
@@ -217,59 +217,6 @@ const GuestbookForm = () => {
         opacity: submitting ? 0.7 : 1,
       }}>
         {submitted ? '등록됨 ✓' : submitting ? '등록 중...' : '남기기 →'}
-      </button>
-    </form>
-  )
-}
-
-/* ─── 연락처 폼 ──────────────────────────────────────── */
-
-const ContactForm = () => {
-  const [form, setForm] = useState({ name: '', email: '', message: '' })
-  const [sent, setSent] = useState(false)
-
-  const fields = [
-    { key: 'name', label: '이름', placeholder: '김민', type: 'text' },
-    { key: 'email', label: '이메일', placeholder: 'your@email.com', type: 'email' },
-    { key: 'message', label: '메시지', placeholder: '', type: 'textarea' },
-  ]
-
-  return sent ? (
-    <div style={{ border: '1px solid var(--accent-bd)', padding: 40, background: 'var(--accent-bg)' }}>
-      <div style={{ ...sans, color: 'var(--accent)', marginBottom: 8, fontSize: 17, fontWeight: 600 }}>
-        메시지 전송 완료<span className="cursor" />
-      </div>
-      <p style={{ ...sans, color: 'var(--ink-2)', fontSize: 14 }}>
-        24시간 이내에 답변드리겠습니다.
-      </p>
-    </div>
-  ) : (
-    <form onSubmit={e => { e.preventDefault(); setSent(true) }} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {fields.map(({ key, label, placeholder, type }) => (
-        <div key={key}>
-          <div style={{ ...sans, color: 'var(--accent)', fontSize: 12, fontWeight: 600, marginBottom: 6 }}>
-            {label}
-          </div>
-          {type === 'textarea'
-            ? <textarea rows={4} required value={form.message}
-                onChange={e => setForm({ ...form, message: e.target.value })}
-                style={{ ...inputBase, resize: 'none', display: 'block' }} placeholder={placeholder}
-                onFocus={focusStyle} onBlur={blurStyle} />
-            : <input type={type} required value={form[key as 'name' | 'email']}
-                onChange={e => setForm({ ...form, [key]: e.target.value })}
-                style={inputBase} placeholder={placeholder}
-                onFocus={focusStyle} onBlur={blurStyle} />
-          }
-        </div>
-      ))}
-      <button type="submit" style={{
-        ...sans, fontSize: 14, fontWeight: 600, padding: '12px 28px', alignSelf: 'flex-start',
-        background: 'var(--accent)', border: 'none',
-        color: 'var(--bg)', cursor: 'pointer', transition: 'opacity 0.2s',
-      }}
-        onMouseEnter={e => { e.currentTarget.style.opacity = '0.85' }}
-        onMouseLeave={e => { e.currentTarget.style.opacity = '1' }}>
-        메시지 보내기 →
       </button>
     </form>
   )
@@ -308,15 +255,15 @@ const ProjectCard = ({ project, delay = 0 }: { project: typeof PROJECTS[0]; dela
 const ActivityRow = ({ activity, delay }: { activity: typeof ACTIVITIES[0]; delay: number }) => {
   const ref = useFadeUp()
   return (
-    <div ref={ref as React.RefObject<HTMLDivElement>} className="fade-up"
+    <div ref={ref as React.RefObject<HTMLDivElement>} className="fade-up activity-row"
       style={{ display: 'grid', gridTemplateColumns: '180px 1fr', gap: 40, padding: '28px 0', borderTop: '1px solid var(--border)', transitionDelay: `${delay}ms` }}>
       <div>
         <div style={{ ...sans, fontSize: 12, color: 'var(--ink-3)', marginBottom: 6 }}>{activity.period}</div>
         <div style={{ ...sans, fontSize: 14, color: 'var(--accent)', fontWeight: 600 }}>{activity.title}</div>
       </div>
       <div>
-        <div style={{ ...sans, fontSize: 15, color: 'var(--heading)', fontWeight: 600, marginBottom: 8 }}>{activity.role}</div>
-        <div style={{ ...sans, fontSize: 14, lineHeight: 1.75, color: 'var(--ink-2)' }}>{activity.desc}</div>
+        <div style={{ ...sans, fontSize: 15, color: 'var(--heading)', fontWeight: 600, marginBottom: 8, whiteSpace: 'pre-line' }}>{activity.desc}</div>
+        <div style={{ ...sans, fontSize: 14, lineHeight: 1.75, color: 'var(--ink-2)', whiteSpace: 'pre-line' }}>{activity.role}</div>
       </div>
     </div>
   )
@@ -522,13 +469,13 @@ export default function App() {
         <section id="guestbook" ref={setRef('guestbook')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
           <SectionLabel>방명록</SectionLabel>
           <p style={{ ...sans, fontSize: 14, color: 'var(--ink-2)', marginBottom: 24 }}>
-            방문해주셔서 감사합니다. 짧은 메시지 남겨주세요 :)
+            방문해주셔서 감사합니다. 자유롭게 메시지 남겨주세요!
           </p>
           <GuestbookForm />
           <div>
             {messages.length === 0 && (
               <p style={{ ...sans, fontSize: 14, color: 'var(--ink-3)', padding: '18px 0', borderTop: '1px solid var(--border-2)' }}>
-                아직 방명록이 없어요. 첫 메시지를 남겨주세요!
+                첫 방명록을 남겨주세요!
               </p>
             )}
             {messages.map((msg, i) => (
@@ -548,32 +495,30 @@ export default function App() {
         {/* ── 연락처 ── */}
         <section id="contact" ref={setRef('contact')} style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px' }}>
           <SectionLabel>연락처</SectionLabel>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 48 }}>
             <div>
               <h2 style={{ ...sans, fontSize: 'clamp(26px, 4vw, 42px)', fontWeight: 700, color: 'var(--heading)', lineHeight: 1.2, marginBottom: 18, letterSpacing: '-0.02em' }}>
                 함께 만들어봐요<span style={{ color: 'var(--accent)' }}>.</span>
               </h2>
-              <p style={{ ...sans, fontSize: 14, lineHeight: 1.85, color: 'var(--ink-2)', marginBottom: 36 }}>
+              <p style={{ ...sans, fontSize: 14, lineHeight: 1.85, color: 'var(--ink-2)' }}>
                 정규직, 계약직, 흥미로운 사이드 프로젝트 모두 열려 있습니다.
               </p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
-                {[
-                  { label: '이메일', value: 'kim.min.cse@gmail.com', href: 'mailto:kim.min.cse@gmail.com' },
-                  { label: 'GitHub', value: 'github.com/7immin', href: 'https://github.com/7immin' },
-                  { label: 'LinkedIn', value: 'linkedin.com/in/7immin', href: 'https://linkedin.com/in/7immin' },
-                ].map(({ label, value, href }) => (
-                  <div key={label} style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                    <span style={{ ...sans, fontSize: 13, fontWeight: 600, color: 'var(--accent)', width: 68, flexShrink: 0 }}>{label}</span>
-                    <a href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined} style={{ ...sans, fontSize: 13, color: 'var(--ink-2)', textDecoration: 'none', borderBottom: '1px solid var(--border)', paddingBottom: 1, transition: 'color 0.2s, border-color 0.2s' }}
-                      onMouseEnter={e => { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.borderColor = 'var(--accent)' }}
-                      onMouseLeave={e => { e.currentTarget.style.color = 'var(--ink-2)'; e.currentTarget.style.borderColor = 'var(--border)' }}>
-                      {value}
-                    </a>
-                  </div>
-                ))}
-              </div>
             </div>
-            <ContactForm />
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {[
+                { label: '이메일', value: 'kim.min.cse@gmail.com', href: 'mailto:kim.min.cse@gmail.com' },
+                { label: 'GitHub', value: 'github.com/7immin', href: 'https://github.com/7immin' },
+                { label: 'LinkedIn', value: 'linkedin.com/in/7immin', href: 'https://linkedin.com/in/7immin' },
+              ].map(({ label, value, href }) => (
+                <a key={label} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  className="card-hover"
+                  style={{ display: 'flex', alignItems: 'center', gap: 20, padding: '18px 22px', border: '1px solid var(--border)', background: 'var(--bg-2)', textDecoration: 'none' }}>
+                  <span style={{ ...sans, fontSize: 13, fontWeight: 600, color: 'var(--accent)', width: 68, flexShrink: 0 }}>{label}</span>
+                  <span style={{ ...sans, fontSize: 14, color: 'var(--ink-2)', flex: 1 }}>{value}</span>
+                  <span style={{ ...sans, fontSize: 14, color: 'var(--accent)' }}>→</span>
+                </a>
+              ))}
+            </div>
           </div>
         </section>
 
