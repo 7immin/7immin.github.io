@@ -475,7 +475,7 @@ export default function App() {
           <div>
             {messages.length === 0 && (
               <p style={{ ...sans, fontSize: 14, color: 'var(--ink-3)', padding: '18px 0', borderTop: '1px solid var(--border-2)' }}>
-                첫 방명록을 남겨주세요!
+                아직 방명록이 없습니다. 첫 메시지를 남겨주세요!
               </p>
             )}
             {messages.map((msg, i) => (
