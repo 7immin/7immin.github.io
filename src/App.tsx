@@ -124,6 +124,23 @@ function useFadeUp() {
   return ref
 }
 
+function CountUp({ to, duration = 1800 }: { to: number; duration?: number }) {
+  const [value, setValue] = useState(0)
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setValue(to); return }
+    let frame = 0
+    const start = performance.now()
+    const tick = (now: number) => {
+      const t = Math.min((now - start) / duration, 1)
+      setValue(Math.round(to * (1 - Math.pow(1 - t, 3))))
+      if (t < 1) frame = requestAnimationFrame(tick)
+    }
+    frame = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(frame)
+  }, [to, duration])
+  return <>{value.toLocaleString('ko-KR')}</>
+}
+
 function useTypewriter(words: string[], speed = 80, pause = 1800) {
   const [display, setDisplay] = useState('')
   const [wordIdx, setWordIdx] = useState(0)
@@ -429,12 +446,12 @@ export default function App() {
 
             <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', borderTop: '1px solid var(--border)' }}>
               {[
-                { value: '1', label: '수상' },
-                { value: '0', label: '자격증'},
-                { value: '59,894,840', label: '장학금' },
+                { value: 1, label: '수상' },
+                { value: 0, label: '자격증'},
+                { value: 59894840, label: '장학금' },
               ].map(({ value, label }, i) => (
                 <div key={label} style={{ padding: '22px 36px', borderRight: i < 3 ? '1px solid var(--border)' : 'none', textAlign: 'center' }}>
-                  <div style={{ ...sans, fontSize: 26, fontWeight: 700, color: 'var(--accent)', lineHeight: 1 }}>{value}</div>
+                  <div style={{ ...sans, fontSize: 26, fontWeight: 700, color: 'var(--accent)', lineHeight: 1, fontVariantNumeric: 'tabular-nums' }}><CountUp to={value} /></div>
                   <div style={{ ...sans, fontSize: 12, color: 'var(--ink-3)', marginTop: 5 }}>{label}</div>
                 </div>
               ))}
