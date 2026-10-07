@@ -541,7 +541,7 @@ export default function App() {
 
         {/* ── 푸터 ── */}
         <footer style={{ maxWidth: 1100, margin: '0 auto', padding: '24px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
-          <span style={{ ...sans, fontSize: 13, color: 'var(--ink-3)' }}>© {new Date().getFullYear()} 김민</span>
+          <span style={{ ...sans, fontSize: 13, color: 'var(--ink-3)' }}>© {new Date().getFullYear()} 김민. All rights reserved.</span>
           <span style={{ ...sans, fontSize: 13, color: 'var(--ink-3)' }}>Built with React + TypeScript</span>
         </footer>
       </div>
