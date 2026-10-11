@@ -1,6 +1,6 @@
 // v6
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { collection, addDoc, onSnapshot, orderBy, query, serverTimestamp, Timestamp } from 'firebase/firestore'
+import { collection, addDoc, onSnapshot, orderBy, query, serverTimestamp, Timestamp, doc, getDoc, setDoc, increment } from 'firebase/firestore'
 import { db } from './lib/firebase'
 
 /* ─── 데이터 ─────────────────────────────────────────── */
@@ -124,6 +124,34 @@ function useFadeUp() {
     return () => obs.disconnect()
   }, [])
   return ref
+}
+
+function useVisitorStats() {
+  const [stats, setStats] = useState<{ today: number; total: number } | null>(null)
+  useEffect(() => {
+    const today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Seoul' }).format(new Date())
+    const totalRef = doc(db, 'stats', 'visits')
+    const todayRef = doc(db, 'dailyVisits', today)
+    ;(async () => {
+      // 브라우저당 하루 한 번만 집계. 개발 서버 방문은 집계하지 않음.
+      let lastVisit: string | null = null
+      try { lastVisit = localStorage.getItem('lastVisit') } catch { /* ignore */ }
+      if (!import.meta.env.DEV && lastVisit !== today) {
+        try {
+          await Promise.all([
+            setDoc(totalRef, { count: increment(1) }, { merge: true }),
+            setDoc(todayRef, { count: increment(1) }, { merge: true }),
+          ])
+          try { localStorage.setItem('lastVisit', today) } catch { /* ignore */ }
+        } catch { /* counting is best-effort */ }
+      }
+      try {
+        const [totalSnap, todaySnap] = await Promise.all([getDoc(totalRef), getDoc(todayRef)])
+        setStats({ total: totalSnap.data()?.count ?? 0, today: todaySnap.data()?.count ?? 0 })
+      } catch { /* hide the counter if it can't be read */ }
+    })()
+  }, [])
+  return stats
 }
 
 function CountUp({ to, duration = 1800 }: { to: number; duration?: number }) {
@@ -321,6 +349,7 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false)
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({})
 
+  const visitors = useVisitorStats()
   const typed = useTypewriter(['백엔드 개발자', '풀스택 개발자', 'AI 엔지니어'])
 
   const toggleTheme = () => {
@@ -563,6 +592,13 @@ export default function App() {
         {/* ── 푸터 ── */}
         <footer style={{ maxWidth: 1100, margin: '0 auto', padding: '24px', borderTop: '1px solid var(--border)', display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 10 }}>
           <span style={{ ...sans, fontSize: 13, color: 'var(--ink-3)' }}>© {new Date().getFullYear()} 김민. All rights reserved.</span>
+          {visitors && (
+            <span style={{ ...sans, fontSize: 13, color: 'var(--ink-3)' }}>
+              오늘 <span style={{ color: 'var(--accent)', fontWeight: 600 }}>{visitors.today.toLocaleString('ko-KR')}</span>
+              {' · '}
+              전체 <span style={{ color: 'var(--accent)', fontWeight: 600 }}>{visitors.total.toLocaleString('ko-KR')}</span>
+            </span>
+          )}
           <span style={{ ...sans, fontSize: 13, color: 'var(--ink-3)' }}>Built with React + TypeScript</span>
         </footer>
       </div>
